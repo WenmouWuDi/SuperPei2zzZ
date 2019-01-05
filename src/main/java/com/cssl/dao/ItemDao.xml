@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace映射dao接口全路径 -->
+<mapper namespace="com.cssl.dao.ItemDao">
+    <insert id="Tou1" parameterType="ItemsVo">
+        <selectKey resultType="int" order="BEFORE" keyProperty="iid">
+            SELECT seq_item.nextval FROM dual
+        </selectKey>
+        INSERT INTO item VALUES(#{iid},#{uid1},#{sid1},#{oid1})
+    </insert>
+    <delete id="delPiao" parameterType="int">
+        DELETE FROM item WHERE oid1 = #{oid1}
+    </delete>
+
+    <delete id="delPiaoBySid" parameterType="int">
+        DELETE FROM item WHERE sid1 = #{sid1}
+    </delete>
+
+</mapper>

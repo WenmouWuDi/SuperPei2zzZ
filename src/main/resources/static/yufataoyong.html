@@ -1,0 +1,21 @@
+<!DOCTYPE html><html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<DIV class="wrap" id="navbar">
+    <DIV class="profile">您好，<span th:text="${session.user.getUsername()}">文某</span> <SPAN class="return"><A href="/showAll?lie=1">返回列表</A></SPAN>
+        <SPAN class="addnew"><A href="/XuanZe">添加新投票</A></SPAN>
+        <SPAN class="modify"><A th:href="@{'/LaiYuan?index='+${session.all.getPageNum()}}">维护</A></SPAN>
+        <SPAN class="return"><A href="/ZhuXiao">注销</A></SPAN>
+    </DIV>
+    <DIV class="search">
+        <FORM th:action="'/showAll?index='+${session.all.getPageNum()}" method="post"><INPUT name="title" class="input-text" type="text" th:value="${session.title}">
+            <INPUT name="aaa" class="input-button" type="submit" value=""/>
+        </FORM>
+    </DIV>
+</DIV>
+</body>
+</html>

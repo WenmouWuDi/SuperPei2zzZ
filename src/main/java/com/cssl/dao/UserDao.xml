@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace映射dao接口全路径 -->
+<mapper namespace="com.cssl.dao.UserDao">
+    <select id="userLogin" resultType="UserVo" parameterType="UserVo">
+        SELECT * FROM users_1 WHERE username = #{username} and password1 = #{password1}
+    </select>
+
+    <update id="xiuOnline" parameterType="UserVo">
+        update users_1 set isonline = DECODE(#{isOnline},'N','Y','Y','N') WHERE uid1 = #{uid1}
+    </update>
+
+    <insert id="userRegister" >
+        <selectKey order="BEFORE" keyProperty="uid1" resultType="int" >
+            SELECT toupiao.nextval FROM dual
+        </selectKey>
+        INSERT INTO users_1 VALUES(#{uid1},#{username},#{password1},'N','N')
+    </insert>
+
+    <select id="isExist" parameterType="String" resultType="int">
+        select count(1) from users_1 where username = #{param1}
+    </select>
+
+    <select id="isTouPiao" parameterType="int" resultType="int">
+        SELECT COUNT(1) FROM item WHERE uid1 = #{param1} AND sid1 = #{param2}
+    </select>
+    
+    <select id="isAdmin" parameterType="int" resultType="int">
+        SELECT COUNT(1) FROM users_1 WHERE isAdmin = 'Y' AND uid1 = #{arg1}
+    </select>
+
+    <update id="updateOnline" parameterType="UserVo">
+        UPDATE users_1 SET isonline = #{isOnline} WHERE uid1 = #{uid1}
+    </update>
+
+    <select id="isOnline" parameterType="int" resultType="int">
+        SELECT COUNT(1) FROM users_1 WHERE isonline = 'Y' AND uid1 = #{arg1}
+    </select>
+</mapper>

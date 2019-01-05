@@ -1,0 +1,22 @@
+mybatis:
+  config-location: classpath:mybatis-config.xml
+
+spring:
+  mvc:
+    static-path-pattern: /**
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:localhost:orcl
+    username: scott
+    password: scott
+  thymeleaf:
+    cache: false
+    encoding: utf-8
+    prefix: classpath:/static/
+    suffix: .html
+  resources:
+    static-locations: classpath:/templates/,classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/
+pagehelper:
+  helperDialect: oracle
+  reasonable: true
+  pageSizeZero: true

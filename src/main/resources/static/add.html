@@ -1,0 +1,101 @@
+﻿<!DOCTYPE><html xmlns:th="http://www.thymeleaf.org"><HEAD><META content="IE=11.0000"
+http-equiv="X-UA-Compatible">
+ 
+<META http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+<TITLE>发布新投票</TITLE> <LINK href="css/style.css" rel="stylesheet" type="text/css"> 
+<SCRIPT src="js/jquery-1.8.0.min.js" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT type="text/javascript">
+
+</SCRIPT>
+ 
+<META name="GENERATOR" content="MSHTML 11.00.10586.420"></HEAD> 
+<BODY>
+<DIV class="wrap" id="header"><IMG src="images/logo.gif"> </DIV>
+<DIV class="wrap" id="navbar" th:include="yufataoyong.html"></DIV>
+<script type="text/javascript" src="js/jquery-1.12.4.js"></script>
+<script type="text/javascript">
+    var isIE = !!document.all;
+    function AddOption()
+    {
+        var voteoptions = document.getElementById("voteoptions");
+        var _p = document.createElement("p");
+        var _input = document.createElement("input");
+        _input.type = "text";
+        _input.className = "input-text";
+        _input.setAttribute("name", "newoptions");
+        _p.appendChild(_input);
+        var _a = document.createElement("a");
+        _a.className = "del";
+        _a.setAttribute("href", "javascript:;");
+        if(isIE) {
+            _a.attachEvent("onclick", DelOption);
+        } else {
+            _a.addEventListener("click", DelOption, false);
+        }
+        _a.appendChild(document.createTextNode("删除"));
+        _p.appendChild(_a);
+        voteoptions.appendChild(_p);
+    }
+    //删除选项
+    function DelOption(e)
+    {
+        if(!e) e = window.event;
+        var a = e.srcElement || e.target;
+        var obj = a.parentNode;
+        obj.parentNode.removeChild(obj);
+    }
+    //非空验证
+    function check(){
+        var title = document.getElementById('title').value;
+        var options = document.getElementsByName('options');
+        if(title==''){
+            alert('投票内容不能为空');
+            return false;
+        }
+
+        //新增选项不能为空
+        for(var index in options){
+            if(options[index].value==''){
+                alert('选项内容不能为空');
+                return false;
+            }
+        }
+
+        //原来要修改的选项也不能为空
+        var flag = true;
+        $('#voteoptions :input').each(function(){
+            //alert(this.value);
+            if(this.value==''){
+                flag = false;
+            }
+        });
+        if(!flag){
+            alert('选项内容不能为空');
+        }
+        return flag;
+    }
+
+</script>
+<DIV class="box" id="voteManage">
+<H2>添加新投票</H2>
+<DIV class="content">
+<FORM onsubmit="return check();" action="/xiugai" method="post">
+<DL>
+  <DT>投票内容：</DT>
+  <DD><INPUT name="struts.token.name" type="hidden" > <INPUT name="sid1" type="hidden" th:value="${session.map1['SID1']}">
+      <INPUT name="title" class="input-text" id="title" type="text" th:value="${session.map1['TITLE']}" readonly>
+  </DD>
+  <DT>投票类型：</DT>
+  <DD><INPUT name="subject" type="radio" value="单" th:checked="${session.map1['TYPE1'] eq '单'}">单选	<INPUT name="subject" type="radio" th:checked="${session.map1['TYPE1'] eq '多'}" value="多">多选</DD>
+  <DT>投票选项：</DT>
+  <DD id="voteoptions" th:each="map,in:${session.map}">
+    <P><INPUT name="options" class="input-text" type="text" th:value="${map['CONTENT1']}">
+        <a onclick="DelOption()" th:if="${in.index >= 2}" href="javascript:;">删除</a>
+    <input name="oid1" type="hidden" th:value="${map['OID1']}"></P>
+  </DD>
+  <DT></DT>
+  <DD class="button"><INPUT type="image" src="images/button_submit.gif">
+  					 <A onclick="AddOption()" href="javascript:;" >增加选项</A>					 <A th:href="@{'/showAll'}">取消操作</A>
+  				 </DD></DL></FORM></DIV></DIV>
+<DIV class="wrap" id="footer">	北大青鸟 © 版权所有 </DIV></BODY></HTML>

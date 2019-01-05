@@ -1,0 +1,35 @@
+﻿<!DOCTYPE><html xmlns:th="http://www.thymeleaf.org">
+<HEAD><META content="IE=11.0000"
+http-equiv="X-UA-Compatible"> 
+<META http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+<TITLE>投票列表</TITLE> <LINK href="css/style.css" rel="stylesheet" type="text/css"> 
+<META name="GENERATOR" content="MSHTML 11.00.10586.420"></HEAD>
+<script type="text/javascript" src="js/jquery-1.12.4.js"></script>
+<script type="text/javascript">
+	function Del(a){
+		if(confirm("确定要删除吗？")){
+			window.location = "/Delete?id="+$(a).attr("value");
+		}
+	}
+</script>
+<BODY>
+<DIV class="wrap" id="header"><IMG src="images/logo.gif"> </DIV>
+
+<DIV class="wrap" id="navbar" th:include="yufataoyong.html">
+</DIV>
+<DIV class="wrap" id="vote">
+<H2>投票列表</H2>
+<DIV style="float: right;"></DIV><BR>
+<UL class="list">
+  <LI class="odd" th:each="map:${session.all}">
+  <H4><A th:href="@{'/showOne?id='+${map['SID1']}}" th:text="${map['TITLE']}">哪个浏览器好用</A></H4>
+	  <DIV th:style="'display:block;padding-left:18px;float:right;'" th:if="${session.LaiYuan eq 'WeiHu'}"><img src="images/edit.gif"><a th:href="@{'WeiHui1?id='+${map['SID1']}}">维护</a>	<a href="javascript:;" th:value="${map['SID1']}" onclick="Del(this)">删除</a></DIV>
+	  <DIV class="join" th:if="${session.LaiYuan eq 'DengLu'}"><A th:href="@{'/ToCanYu?id='+${map['SID1']}}">我要参与</A></DIV>
+
+  <P class="info">共有 <SPAN th:text="${map['XUAN']}">0</SPAN> 个选项，已有 		<SPAN th:text="${map['PIAO']}"	>0</SPAN>				 个投票。</P></LI>
+  <LI>
+<DIV style="float: right;"><A href="/showAll?index=1" th:if="${session.all.getPageNum() != 1}">首页</A><span th:if="${session.all.getPageNum() eq 1}">首页</span>
+	| 					 <a th:href="@{'/showAll?index='+${session.all.getPageNum() - 1}}" th:if="${session.all.getPageNum() != 1}">上一页</a><span th:if="${session.all.getPageNum() eq 1}">上一页</span>			  | 					 <a th:href="@{'/showAll?index='+${session.all.getPageNum() + 1}}" th:if="${session.all.getPageNum()} != ${session.all.getPages()}">下一页</a>	<span th:if="${session.all.getPageNum()} eq ${session.all.getPages()}">下一页</span>			  | 			 <a th:href="@{'/showAll?index='+${session.all.getPages()}}" th:if="${session.all.getPageNum()} != ${session.all.getPages()}">末页</a><span th:if="${session.all.getPageNum()} eq ${session.all.getPages()}">末页</span>
+</DIV></LI></UL>
+	 </DIV></DIV>
+<DIV class="wrap" id="footer">	北大青鸟 © 版权所有 </DIV></BODY></HTML>

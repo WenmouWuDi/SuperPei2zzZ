@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace映射dao接口全路径 -->
+<mapper namespace="com.cssl.dao.OptionsDao">
+    <update id="XiuGaiOptions" parameterType="OptionsVo">
+        UPDATE options SET content1 = #{content1},osid = #{osid} WHERE oid1 = #{oid1}
+    </update>
+    
+    <insert id="AddOptions" parameterType="OptionsVo">
+        <selectKey keyProperty="oid1" order="BEFORE" resultType="int" >
+            SELECT seq_options.nextval FROM dual
+        </selectKey>
+        INSERT INTO options VALUES(#{oid1},#{content1},#{osid})
+    </insert>
+
+    <delete id="deleteOptions" parameterType="int">
+        DELETE FROM options WHERE oid1 = #{arg1}
+    </delete>
+
+    <insert id="addOptions" parameterType="OptionsVo">
+        <selectKey resultType="int" keyProperty="oid1" order="BEFORE">
+            SELECT seq_options.nextval FROM dual
+        </selectKey>
+        INSERT INTO options VALUES(#{oid1},#{content1},#{osid})
+    </insert>
+
+    <delete id="delOptionsBySid" parameterType="int">
+        DELETE FROM options WHERE osid = #{osid}
+    </delete>
+
+    <select id="isExistOption" parameterType="String" resultType="int">
+        SELECT  COUNT(1) FROM options WHERE content1 = #{param1}
+    </select>
+</mapper>

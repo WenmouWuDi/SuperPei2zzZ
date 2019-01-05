@@ -1,0 +1,22 @@
+﻿<!DOCTYPE><html xmlns:th="http://www.thymeleaf.org">
+<LINK href="css/style.css" rel="stylesheet" type="text/css"></HEAD>
+<BODY>
+<DIV class="wrap" id="header"><IMG src="images/logo.gif"> </DIV>
+<DIV class="wrap" id="navbar" th:include="yufataoyong.html"></DIV>
+<DIV class="wrap" id="vote">
+  <H2>查看投票</H2>
+  <UL class="list">
+    <LI>
+      <H4 th:text="${session.map1['TITLE']}">哪个浏览器好用</H4>
+      <P class="info">共有 <span th:text="${session.map1['XUAN']}">0</span> 个选项，已有 <SPAN th:text="${session.map1['PIAO']}">0</SPAN> 个投票。</P>
+      <OL>
+        <LI th:each="map:${session.map}">
+          <span th:text="${map['CONTENT1']}">IE</span>
+          <DIV class="rate">
+            <DIV class="ratebg">
+              <DIV class="percent" th:style="'width:'+${map['PIAO'] }/ (${session.map1['PIAO'] }==0?1:${session.map1['PIAO'] }) * 100+'%'"></DIV></DIV>
+            <P><span th:text="${map['PIAO']}">0</span>票<SPAN>(<span th:text="${map['PIAO'] }/ (${session.map1['PIAO'] }==0?1:${session.map1['PIAO'] }) * 100">40.0</span>% &nbsp;)</SPAN></P></DIV>
+        </LI>
+      </OL>
+      <DIV class="goback"><A th:href="@{'/showAll'}">返回投票列表</A></DIV></LI></UL></DIV>
+<DIV class="wrap" id="footer">	北大青鸟  版权所有 </DIV></BODY></HTML>

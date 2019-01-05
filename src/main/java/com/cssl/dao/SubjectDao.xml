@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace映射dao接口全路径 -->
+<mapper namespace="com.cssl.dao.SubjectDao">
+    <select id="showAll" resultType="map" parameterType="String">
+        select a.sid1,title ,count(distinct b.oid1) xuan,count(c.sid1) piao from subject a
+        inner join options b on a.sid1=b.osid
+        left join item c on a.sid1=c.sid1 and c.oid1=b.oid1
+        WHERE title LIKE '%'||#{param1}||'%'
+        group by a.sid1,title
+        ORDER BY a.sid1
+    </select>
+    <select id="showOne" parameterType="int" resultType="map">
+         select a.sid1,b.content1 ,count(distinct b.oid1) xuan,b.oid1,count(c.sid1) piao from subject a
+        inner join options b on a.sid1=b.osid
+        left join item c on a.sid1=c.sid1 and c.oid1=b.oid1
+        WHERE a.sid1 = #{arg1}
+        group by a.sid1,b.content1,b.oid1
+        ORDER BY a.sid1
+    </select>
+    <select id="showTitle" resultType="map" parameterType="int">
+        select a.sid1,a.title,count(distinct b.oid1) xuan,count(c.sid1) piao,type1 from subject a
+        inner join options b on a.sid1=b.osid
+        left join item c on a.sid1=c.sid1 and c.oid1=b.oid1
+        WHERE  a.sid1 = #{arg1}
+        group by a.sid1,a.title,type1
+        ORDER BY a.sid1
+    </select>
+
+    <update id="XiuGai" parameterType="SubjectVo">
+        UPDATE subject SET title = #{title},type1 = #{type1} WHERE sid1 = #{sid1}
+    </update>
+
+    <insert id="chaRu" parameterType="SubjectVo">
+        <selectKey order="BEFORE" resultType="int" keyProperty="sid1">
+            select seq_subjec.nextval from dual
+        </selectKey>
+        INSERT INTO subject VALUES(#{sid1},#{title},#{type1})
+    </insert>
+
+    <delete id="delSubjectBySid" parameterType="int">
+        DELETE FROM subject WHERE sid1= #{sid1}
+    </delete>
+</mapper>

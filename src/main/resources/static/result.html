@@ -1,0 +1,19 @@
+﻿<!DOCTYPE><html xmlns:th="http://www.thymeleaf.org">
+<HEAD><META content="IE=11.0000"
+http-equiv="X-UA-Compatible"> 
+<META http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+<TITLE>投票列表</TITLE> <LINK href="css/style.css" rel="stylesheet" type="text/css"> 
+<META name="GENERATOR" content="MSHTML 11.00.10586.420"></HEAD>
+<BODY>
+<DIV class="wrap" id="header"><IMG src="images/logo.gif"> </DIV>
+	<!-- th:text="${session.user.getUsername() == null ? 'wenmou' : session.user.getUsername()}"-->
+<DIV class="wrap" id="navbar" th:include="yufataoyong.html"></DIV>
+<DIV class="wrap" id="vote">
+<H2>投票结果</H2>
+<DIV style="float: right;"></DIV><BR>
+<UL class="list">
+  <LI class="odd">
+	  <SPAN  th:text="${session.Wen}">啊啊啊</SPAN>
+  </LI>
+</UL>
+<DIV class="wrap" id="footer">	北大青鸟 © 版权所有 </DIV></BODY></HTML>
