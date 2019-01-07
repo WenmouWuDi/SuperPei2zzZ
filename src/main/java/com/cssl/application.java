@@ -12,6 +12,7 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 @ServletComponentScan("com.cssl.intercetor")
 @SpringBootApplication()
 public class application {
+    //文某最帅
     public static void main(String[] args) {
         SpringApplication.run(application.class,args);
     }
